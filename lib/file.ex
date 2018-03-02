@@ -1,14 +1,27 @@
 defmodule Waverider.File do
   import Waverider.Pattern
 
-  defstruct [:chunk_id, :chunk_size, :format, :sub_chunk_1_id, :sub_chunk_1_size, :audio_format,
-      :num_channels, :sample_rate, :byte_rate, :block_align, :bits_per_sample, :sub_chunk_2_id,
-      :sub_chunk_2_size, :data]
+  defstruct [
+    :chunk_id,
+    :chunk_size,
+    :format,
+    :sub_chunk_1_id,
+    :sub_chunk_1_size,
+    :audio_format,
+    :num_channels,
+    :sample_rate,
+    :byte_rate,
+    :block_align,
+    :bits_per_sample,
+    :sub_chunk_2_id,
+    :sub_chunk_2_size,
+    :data
+  ]
 
-  @spec construct(binary(), map):: %__MODULE__{}
+  @spec construct(binary(), map) :: %__MODULE__{}
   def construct(pattern(), attrs \\ %{}) do
     %__MODULE__{
-      chunk_id:  Map.get(attrs, :chunk_id) || chunk_id,
+      chunk_id: Map.get(attrs, :chunk_id) || chunk_id,
       chunk_size: Map.get(attrs, :chunk_size) || chunk_size,
       format: Map.get(attrs, :format) || format,
       sub_chunk_1_id: Map.get(attrs, :sub_chunk_1_id) || sub_chunk_1_id,

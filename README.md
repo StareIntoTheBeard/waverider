@@ -1,6 +1,10 @@
 # Waverider
 
-**TODO: Add description**
+This is a super early library for parsing wav files.
+
+## Current Features
+  * Read and write .wav files
+  * Split stereo files into mono files by channel
 
 ## Installation
 
