@@ -27,24 +27,8 @@ defmodule Waverider.FileTest do
     {:ok, %{binary: binary, struct_stub: struct_stub}}
   end
 
-  test ".construct/1 builds a File struct", %{binary: binary, struct_stub: struct_stub} do
-    assert Waverider.File.construct(binary) == struct_stub
-  end
-
-  test ".construct/2 builds a File struct and updates attributes set in map", %{
-    binary: binary,
-    struct_stub: struct_stub
-  } do
-    assert Waverider.File.construct(binary, %{num_channels: 12}) ==
-             struct_stub |> Map.put(:num_channels, 12)
-  end
-
   test ".read/1 reads a binary and returns {:ok, file_struct}", %{struct_stub: struct_stub} do
-    assert Waverider.File.read("#{File.cwd!()}/test/stereo_stub.wav") == {:ok, struct_stub}
-  end
-
-  test ".parse/1 returns a File struct", %{binary: binary, struct_stub: struct_stub} do
-    assert Waverider.File.parse(binary) == {:ok, struct_stub}
+    assert Waverider.File.read("#{File.cwd!()}/test/stereo_stub.wav") == struct_stub
   end
 
   test ".write/2 writes a file struct to disk as binary data", %{

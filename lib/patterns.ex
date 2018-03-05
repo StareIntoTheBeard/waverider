@@ -1,5 +1,5 @@
-defmodule Waverider.Pattern do
-  defmacro pattern(struct) do
+defmodule Waverider.Patterns do
+  defmacro to_binary(struct) do
     quote do
       <<
         Map.get(unquote(struct), :chunk_id)::binary-size(4),
@@ -20,7 +20,7 @@ defmodule Waverider.Pattern do
     end
   end
 
-  defmacro pattern() do
+  defmacro from_binary() do
     quote do
       <<
         var!(chunk_id)::binary-size(4),
