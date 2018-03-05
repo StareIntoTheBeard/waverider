@@ -31,6 +31,12 @@ defmodule Waverider.FileTest do
     assert Waverider.File.read("#{File.cwd!()}/test/stereo_stub.wav") == struct_stub
   end
 
+  test ".read/1 raises if it's passed something without a wav extension" do
+    assert_raise Waverider.File.TypeError, fn ->
+       Waverider.File.read("#{File.cwd!()}/test/not_a_wave.txt")
+    end
+  end
+
   test ".write/2 writes a file struct to disk as binary data", %{
     binary: binary,
     struct_stub: struct_stub
