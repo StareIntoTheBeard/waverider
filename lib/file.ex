@@ -1,4 +1,8 @@
 defmodule Waverider.File do
+  defmodule TypeError do
+    defexception [:message]
+  end
+
   defstruct [
     :chunk_id,
     :chunk_size,
@@ -18,9 +22,13 @@ defmodule Waverider.File do
 
   @spec read(String.t()) :: %__MODULE__{}
   def read(file_path) do
-    %Waverider.File{} =
-      File.read!(file_path)
-      |> Wave.parse()
+    case String.ends_with?(file_path, ".wav") do
+      true ->
+      %Waverider.File{} =
+        File.read!(file_path)
+        |> Wave.parse()
+      false -> raise(Waverider.File.TypeError, [message: "must be a wave file."])
+    end
   end
 
   @spec write(%__MODULE__{}, String.t()) :: :ok
