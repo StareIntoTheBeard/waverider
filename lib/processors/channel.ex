@@ -1,11 +1,11 @@
 defmodule Waverider.Processor.Channel do
-  @spec split_stereo(%Waverider.File{}) :: {:ok, [[any()] | byte()], [[any()] | byte()]}
+  @spec split_stereo(%Waverider.File{}) :: {:ok, %Waverider.File{}, %Waverider.File{}}
   def split_stereo(struct) do
     struct
     |> handle_binary()
   end
 
-  @spec handle_binary(%Waverider.File{}) :: {:ok, [[any()] | byte()], [[any()] | byte()]}
+  @spec handle_binary(%Waverider.File{}) :: {:ok, %Waverider.File{}, %Waverider.File{}}
   defp handle_binary(struct) do
     struct
     |> Map.get(:data)
@@ -13,7 +13,7 @@ defmodule Waverider.Processor.Channel do
     |> split_stereo(struct)
   end
 
-  @spec split_stereo(list, list, list, map) :: {:ok, [binary()], [binary()]}
+  @spec split_stereo(list, list, list, map) :: {:ok, %Waverider.File{}, %Waverider.File{}}
   defp split_stereo(list, channel_one \\ [], channel_two \\ [], struct)
 
   defp split_stereo(
