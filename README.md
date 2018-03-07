@@ -4,6 +4,8 @@ This is a super early library for parsing wav files.
 
 ## Current Features
   * Read and write .wav files
+  * Do math on audio length
+  * Process data bytes into lists for manipulation
   * Split stereo files into mono files by channel
 
 ## Installation

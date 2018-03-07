@@ -1,7 +1,7 @@
-defmodule Waverider.Processor.ChannelTest do
+defmodule Waverider.BinaryTest do
   @pattern quote do: <<header::binary-size(44), var!(data)::binary>>
   use ExUnit.Case
-  doctest Waverider.Processor.Channel
+  doctest Waverider.Binary
 
   setup do
     {:ok, binary} = File.read("#{File.cwd!()}/test/stereo_stub.wav")
@@ -27,16 +27,15 @@ defmodule Waverider.Processor.ChannelTest do
     {:ok, %{struct_stub: struct_stub}}
   end
 
-  test ".split_stereo/1 returns two mono file structs from a stereo file struct", %{
-    struct_stub: struct_stub
-  } do
-    {:ok, file_one, file_two} = Waverider.Processor.Channel.split_stereo(struct_stub)
+  test "chunk_data/1 chunks data into lists", %{struct_stub: struct_stub} do
+    chunked_data = struct_stub |> Waverider.Binary.chunk_data()
+    assert is_list(chunked_data)
+    assert chunked_data |> Enum.count() == 134_080
+    assert chunked_data |> List.first() |> is_list
+    assert chunked_data |> List.first() |> Enum.count() == 4
+  end
 
-    assert file_one.__struct__ == Waverider.File
-    assert file_one.num_channels == 1
-    assert file_one.data |> byte_size == (struct_stub.data |> byte_size) / 2
-    assert file_two.__struct__ == Waverider.File
-    assert file_two.num_channels == 1
-    assert file_two.data |> byte_size == (struct_stub.data |> byte_size) / 2
+  test "from_list/1 takes a list of bytes and returns a bitstring" do
+    assert [00, 01, 02, 03] |> Waverider.Binary.from_list() == <<00, 01, 02, 03>>
   end
 end
