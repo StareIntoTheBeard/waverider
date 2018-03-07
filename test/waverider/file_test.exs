@@ -33,7 +33,7 @@ defmodule Waverider.FileTest do
 
   test ".read/1 raises if it's passed something without a wav extension" do
     assert_raise Waverider.File.TypeError, fn ->
-       Waverider.File.read("#{File.cwd!()}/test/not_a_wave.txt")
+      Waverider.File.read("#{File.cwd!()}/test/not_a_wave.txt")
     end
   end
 

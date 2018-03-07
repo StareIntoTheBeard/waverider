@@ -24,10 +24,12 @@ defmodule Waverider.File do
   def read(file_path) do
     case String.ends_with?(file_path, ".wav") do
       true ->
-      %Waverider.File{} =
-        File.read!(file_path)
-        |> Wave.parse()
-      false -> raise(Waverider.File.TypeError, [message: "must be a wave file."])
+        %Waverider.File{} =
+          File.read!(file_path)
+          |> Wave.parse()
+
+      false ->
+        raise(Waverider.File.TypeError, message: "must be a wave file.")
     end
   end
 
